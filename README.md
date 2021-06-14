@@ -18,8 +18,12 @@ It is a web application that uses the Webex Browser SDK in order to make or rece
 
 ## How to use ?
 
-1. First step
-<div style="text-align:center"><img src="https://raw.githubusercontent.com/SarahCiscoFrance/Webex-WebRTC-Guest-Page/main/screenshot2.png" width="500"></div>
+1. First step, Fill the form with your access token.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SarahCiscoFrance/Webex-WebRTC-Guest-Page/main/screenshot2.png" width="500">
+</p>
 
-2. Second step
-<img src="https://raw.githubusercontent.com/SarahCiscoFrance/Webex-WebRTC-Guest-Page/main/screenshot3.png" width="1200">
+2. Second step, Set the destination of the call and Customize the page if needed
+<p align="center">
+    <img src="https://raw.githubusercontent.com/SarahCiscoFrance/Webex-WebRTC-Guest-Page/main/screenshot3.png" width="900">
+</p>
