@@ -18,7 +18,7 @@ It is a web application that uses the Webex Browser SDK in order to make or rece
 
 ## How to use ?
 
-1. First step, Fill the form with your access token (get yours [here!](https://developer.webex.com/docs/api/getting-started).
+1. First step, Fill the form with your access token (get yours [here!)](https://developer.webex.com/docs/api/getting-started).
 <p align="center">
   <img src="https://raw.githubusercontent.com/SarahCiscoFrance/Webex-WebRTC-Guest-Page/main/screenshot2.png" width="500">
 </p>
