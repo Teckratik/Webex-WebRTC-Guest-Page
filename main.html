@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<title>Webex Guest</title>
+
+<head>
+  <script src="https://kit.fontawesome.com/0a2b8cf434.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="modal.css">
+  <link rel="stylesheet" href="snackbar.css">
+</head>
+
+<style>
+  :root {
+    --color-dark: #161616;
+    --color-ocean: #416dea;
+    --color-grass: #3dd28d;
+    --color-snow: #FFFFFF;
+    --color-salmon: #F32C52;
+    --color-sun: #feee7d;
+    --color-alge: #7999a9;
+    --color-flower: #353866;
+    --color-smoke: #e4e4e4;
+    --color-redfire: #ff5722;
+
+    --borderRadius: 36px;
+
+    --font-face: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  body {
+    font-family: var(--font-face);
+    background-color: #333344;
+    color: white;
+    margin: 0%;
+  }
+
+  textarea:focus,
+  input:focus {
+    outline: none;
+  }
+
+  input[type="color"] {
+    block-size: 35px;
+  }
+
+  .top-container {
+    display: flex;
+    align-items: center;
+    padding: 1%;
+  }
+
+  .top-container.-center {
+    justify-content: center;
+  }
+
+  .top-container.-end {
+    justify-content: flex-end;
+  }
+
+  .top-container.-start {
+    justify-content: flex-start;
+  }
+
+  .button-container {
+    display: flex;
+    margin: 50px auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .button {
+    display: flex;
+    overflow: hidden;
+    margin: 10px;
+    padding: 12px 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* transition: all 150ms linear; */
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none !important;
+    text-transform: none;
+    text-transform: capitalize;
+    color: #fff;
+    border: 0 none;
+    border-radius: var(--borderRadius);
+    /* font-size: 13px; */
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    justify-content: center;
+    align-items: center;
+    /* flex: 0 0 160px; */
+    flex: 0 0 45px;
+    /* box-shadow: 2px 5px 10px var(--color-smoke); */
+  }
+
+  .button:hover {
+    transition: all 150ms linear;
+    opacity: .85;
+  }
+
+  .button:active {
+    transition: all 150ms linear;
+    opacity: .75;
+  }
+
+  .button.-regular {
+    color: #202129;
+    background-color: #f2f2f2;
+  }
+
+  .button.-regular:hover {
+    color: #202129;
+    background-color: #e1e2e2;
+    opacity: 1;
+  }
+
+  .button.-regular:active {
+    background-color: #d5d6d6;
+    opacity: 1;
+  }
+
+  .button.-redfire {
+    color: var(--color-snow);
+    background: var(--color-redfire);
+  }
+
+  .button.-green {
+    color: var(--color-snow);
+    background: var(--color-grass);
+  }
+
+  .button.-salmon {
+    color: var(--color-snow);
+    background: var(--color-salmon);
+  }
+
+  .button.-blue {
+    color: var(--color-snow);
+    background: var(--color-ocean);
+  }
+
+  .button.-large {
+    padding: 25px 85px;
+  }
+
+  .fit-logo {
+    width: 6%;
+  }
+
+  .input-dest {
+    border-radius: 10px;
+    height: 2rem;
+    width: 19%;
+    border: solid var(--color-ocean);
+    outline: none;
+  }
+
+  .input-dest:valid {
+    border: solid var(--color-grass);
+  }
+
+  .input-dest:invalid {
+    border: solid var(--color-redfire);
+  }
+
+  .start-container {
+    background-color: #333344;
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .start-container.-topLeft {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .start-container.-middleLeft {
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .start-container.-bottomLeft {
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+
+
+
+  .start-container.-topCenter {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .start-container.-middleCenter {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .start-container.-bottomCenter {
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+
+
+
+  .start-container.-topRight {
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  .start-container.-middleRight {
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .start-container.-bottomRight {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .calling-page-section {
+    margin-bottom: 5%;
+    border: 1px solid white;
+    padding: 2%;
+    border-radius: var(--borderRadius);
+  }
+</style>
+
+<body>
+  <div id="start-container" class="start-container">
+    <form id="destination">
+      <button id="join" class="button -green -large" style="margin: 20px" title="join"> Contacter l'assistance </button>
+    </form>
+  </div>
+
+  <div id="main-container" style="display: none">
+    <div style="border-bottom: solid;">
+      <div id="top-content" class="top-container -center">
+        <img id="logo" class="fit-logo" src="webexLogo.png">
+        <h1 id="main-title"> Webex Guest</h1>
+      </div>
+    </div>
+
+    <form style="padding: 1%; display: flex; align-items: baseline; display: none;">
+      <label>In Call With &nbsp;</label>
+      <input class="input-dest" id="invitee" name="invitee"
+        placeholder="Person ID or Email Address or SIP URI or Room ID" type="text" required />
+      <!-- <button class="button -green -large" title="join" type="submit"> Join </button> -->
+    </form>
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 2%;">
+      <div id="video-container"
+        style="position:relative; display: flex;padding: 10px;border-radius: 10px; background: linear-gradient(-30deg, #21897E 0%, #3BA99C 25%, #69D1C5 50%, #7EBCE6 75%, #8980F5 100%);">
+        <video
+          style=" height: 30rem; border: solid; background: #222233; border-bottom-left-radius: 10px; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-top-right-radius: 10px;color: black"
+          id="remote-view-video" muted autoplay></video>
+        <div
+          style="position: absolute; bottom:0;right:0;width:20%;    margin-right: 2%;
+          margin-bottom: 2%; border-bottom-left-radius: 10px;border-top-left-radius: 10px;border-bottom-right-radius: 10px;border-top-right-radius: 10px;color: black">
+          <audio id="remote-view-audio" autoplay></audio>
+          <video style="width: 100%; border-radius: 5px;" id="self-view" autoplay></video>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button class="button -salmon" id="mute-audio" title="mute audio" type="button"> <i
+          class="fas fa-microphone"></i></button>
+      <button class="button -blue" id="mute-video" title="mute video" type="button"> <i
+          class="fas fa-video"></i></button>
+      <button class="button -redfire" id="hangup" title="hangup" type="button"> <i
+          class="fas fa-phone-alt"></i></button>
+      <button class="button -green" id="fullscreen" title="fullscreen" type="button"> <i
+          class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <!-- Trigger/Open The Modal -->
+    <button class="button -regular" id="myBtn"><i class="fas fa-cog"></i></button>
+
+  </div>
+
+  <p style="text-align: center;">This sample demonstrates how to start a meeting using Webex JS-SDK in the browser.</p>
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div>
+        <span class="close">&times;</span>
+        <h2 style="text-align: center">Customize Pages <i class="fas fa-paint-brush"></i></h2>
+      </div>
+      <div style="  overflow-y: scroll; height: 45rem;">
+        <div class="calling-page-section">
+          <h2 style="text-align: center">Landing Page</h2>
+          <form class="modal-form" id="change_join_text_btn">
+            <div class="form-content">
+              <label for="fname">First button text:</label><br>
+              <input type="text" id="joinBtnText" name="joinBtnText" value="Contacter l'assistance"><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+          <form class="modal-form" id="change_join_position_btn">
+            <div class="form-content">
+              <label>First button position:</label><br>
+              <select name="position" id="buttonPosition">
+                <option value="-topLeft">Left-Top</option>
+                <option value="-topCenter">Center-Top</option>
+                <option value="-topRight">Right-Top</option>
+                <option value="-middleLeft">Left</option>
+                <option value="-middleCenter" selected="selected">Center</option>
+                <option value="-middleRight">Right</option>
+                <option value="-bottomLeft">Left-Bottom</option>
+                <option value="-bottomCenter">Center-Bottom</option>
+                <option value="-bottomRight">Right-Bottom</option>
+              </select>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+          <form class="modal-form" id="change_background_page1">
+            <div class="form-content">
+              <label for="fname">Change 1st Page Background:</label><br>
+              <input type="url" id="imgUrl1" name="imgUrl1" placeholder="Image URL" required><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+        </div>
+
+        <div class="calling-page-section">
+          <h2 style="text-align: center">Calling Page</h2>
+
+          <form class="modal-form" id="change_dest">
+            <div class="form-content">
+              <label for="dest">Destination:</label><br>
+              <input type="text" id="dest" name="dest" value=""
+                placeholder="Person ID or Email Address or SIP URI or Room ID" required><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+
+          <form class="modal-form" id="change_title">
+            <div class="form-content">
+              <label for="fname">Page Title:</label><br>
+              <input type="text" id="ptitle" name="title" value="Webex Guest"><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+
+          <form class="modal-form" id="change_logo">
+            <div class="form-content">
+              <label for="logoLink">Page Logo:</label><br>
+              <input type="text" id="logoLink" name="logoLink" value="webexLogo.png"><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+          <form class="modal-form" id="change_header_position">
+            <div class="form-content">
+              <label for="cars">Title/Logo Position:</label><br>
+              <select name="position" id="logoPosition">
+                <option value="-start">Left</option>
+                <option value="-center" selected="selected">Center</option>
+                <option value="-end">Right</option>
+              </select>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+
+          <form class="modal-form" id="change_color">
+            <div class="form-content">
+              <label for="fname">Page color:</label><br>
+              <input type="color" id="color" name="color" value="#333344"><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+          <form class="modal-form" id="change_background_img">
+            <div class="form-content">
+              <label for="fname">Background Image:</label><br>
+              <input type="url" id="imageUrl" name="imageUrl" placeholder="Image URL"><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+          <form class="modal-form" id="change_font_color">
+            <div class="form-content">
+              <label for="fname">Font color:</label><br>
+              <input type="color" id="fontColor" name="fontColor" value="white"><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+          <form class="modal-form" id="change_border_color">
+            <div class="form-content">
+              <label for="fname">Video border color:</label><br>
+              <input type="color" id="borderColor" name="borderColor" value="#333344"><br>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+
+          <form class="modal-form" id="change_button_display">
+            <div>
+              <input type="checkbox" id="showMicroBtn" name="microCheck" checked>
+              <label for="showMicroBtn">Show Micro button ?</label>
+            </div>
+            <div>
+              <input type="checkbox" id="showVideoBtn" name="videoCheck" checked>
+              <label for="showVideoBtn">Show Video button ?</label>
+            </div>
+            <button class="button -green btn-form" type="submit">Apply</button>
+          </form>
+        </div>
+
+        <form class="modal-form" style="justify-content: center;" id="restart_demo">
+          <button class="button -green" style="padding: 12px 100px;" type="submit">PUBLISH DEMO</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- The actual snackbar -->
+  <div id="snackbar">Some text some message..</div>
+
+  <script crossorigin src="https://unpkg.com/webex@^1/umd/webex.min.js"></script>
+  <script src="./main.js"></script>
+  <script src="./snackbar.js"></script>
+  <script src="./modal.js"></script>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $("#mute-audio").click(function () {
+    $(this).find("i").toggleClass("fa-microphone-slash");
+  });
+
+  $("#mute-video").click(function () {
+    $(this).find("i").toggleClass("fa-video-slash");
+  });
+
+  $("#hangup").click(function () {
+    $(this).toggleClass("-green");
+    // $(this).find("i").toggleClass("fa-phone-slash");
+  });
+
+  $("#fullscreen").click(function () {
+    var elem = document.getElementById("remote-view-video");
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      /* IE11 */
+      elem.msRequestFullscreen();
+    }
+  });
+
+  $("#change_join_text_btn").on("submit", function (e) {
+    e.preventDefault();
+    var value = $("#joinBtnText").val();
+    console.log(value);
+    $("#join").html(value);
+    $("#snackbar").html("Text changed !")
+    showMessage();
+  });
+
+  $("#change_join_position_btn").on("submit", function (e) {
+    e.preventDefault();
+    var position = $("#buttonPosition").val();
+
+    if ($("#start-container").hasClass('-topLeft')) {
+      $("#start-container").removeClass('-topLeft').addClass(position);
+    } else if ($("#start-container").hasClass('-topCenter')) {
+      $("#start-container").removeClass('-topCenter').addClass(position);
+    } else if ($("#start-container").hasClass('-topRight')) {
+      $("#start-container").removeClass('-topRight').addClass(position);
+    } else if ($("#start-container").hasClass('-middleLeft')) {
+      $("#start-container").removeClass('-middleLeft').addClass(position);
+    } else if ($("#start-container").hasClass('-middleCenter')) {
+      $("#start-container").removeClass('-middleCenter').addClass(position);
+    } else if ($("#start-container").hasClass('-middleRight')) {
+      $("#start-container").removeClass('-middleRight').addClass(position);
+    } else if ($("#start-container").hasClass('-bottomLeft')) {
+      $("#start-container").removeClass('-bottomLeft').addClass(position);
+    } else if ($("#start-container").hasClass('-bottomCenter')) {
+      $("#start-container").removeClass('-bottomCenter').addClass(position);
+    } else if ($("#start-container").hasClass('-bottomRight')) {
+      $("#start-container").removeClass('-bottomRight').addClass(position);
+    } else {
+      $("#start-container").addClass(position);
+    }
+
+    $("#snackbar").html("Button position changed !")
+    showMessage();
+  });
+
+  $("#change_dest").on("submit", function (e) {
+    e.preventDefault();
+    var value = $("#dest").val();
+    console.log(value);
+    $("#invitee").val(value);
+    $("#snackbar").html("Destination changed !")
+    showMessage();
+  });
+
+  $("#change_background_page1").on("submit", function (e) {
+    e.preventDefault();
+    var imageUrl = $("#imgUrl1").val();
+    $('#start-container').css('background', 'url("' + imageUrl + '") no-repeat center center fixed');
+    $('#start-container').css('background-size', 'cover');
+    $("#snackbar").html("Background of 1st page changed !")
+    showMessage();
+  });
+
+  $("#change_title").on("submit", function (e) {
+    e.preventDefault();
+    var value = $("#ptitle").val();
+    console.log(value);
+    $("#main-title").text(value);
+    $("#snackbar").html("Title changed !")
+    showMessage();
+  });
+
+  $("#change_logo").on("submit", function (e) {
+    e.preventDefault();
+    var value = $("#logoLink").val();
+    console.log(value);
+    $("#logo").attr("src", value);
+    $("#snackbar").html("Logo changed !")
+    showMessage();
+  });
+
+  $("#change_header_position").on("submit", function (e) {
+    e.preventDefault();
+    var position = $("#logoPosition").val();
+    if ($("#top-content").hasClass('-start')) {
+      $("#top-content").removeClass('-start').addClass(position);
+    } else if ($("#top-content").hasClass('-center')) {
+      $("#top-content").removeClass('-center').addClass(position);
+    } else if ($("#top-content").hasClass('-end')) {
+      $("#top-content").removeClass('-end').addClass(position);
+    }
+
+    $("#snackbar").html("Logo position changed !")
+    showMessage();
+  });
+
+  $("#change_color").on("submit", function (e) {
+    e.preventDefault();
+    var value = $("#color").val();
+    console.log(value);
+    $("body").css("background-color", value);
+    $("#start-container").css("background-color", value);
+    $("#snackbar").html("Page color changed !")
+    showMessage();
+  });
+
+  $("#change_background_img").on("submit", function (e) {
+    e.preventDefault();
+    var imageUrl = $("#imageUrl").val();
+    console.log(imageUrl);
+    $('body').css('background', 'url("' + imageUrl + '") no-repeat center center fixed');
+    $('body').css('background-size', 'cover');
+
+    $("#snackbar").html("Background image changed !")
+    showMessage();
+  });
+
+  $("#change_font_color").on("submit", function (e) {
+    e.preventDefault();
+    var value = $("#fontColor").val();
+    console.log(value);
+    $("body").css("color", value);
+
+    $("#snackbar").html("Font color changed !")
+    showMessage();
+  });
+
+  $("#change_border_color").on("submit", function (e) {
+    e.preventDefault();
+    var value = $("#borderColor").val();
+    console.log(value);
+    $("#video-container").css("background", value);
+
+    $("#snackbar").html("Video border color changed !")
+    showMessage();
+  });
+
+  $("#change_button_display").on("submit", function (e) {
+    e.preventDefault();
+    var valueMicro = $("#showMicroBtn").prop('checked');
+    var valueVideo = $("#showVideoBtn").prop('checked');
+    if (!valueMicro) {
+      $("#mute-audio").hide();
+    } else {
+      $("#mute-audio").show();
+    }
+
+    if (!valueVideo) {
+      $("#mute-video").hide();
+    } else {
+      $("#mute-video").show();
+    }
+
+    $("#snackbar").html("Button visibility changed !")
+    showMessage();
+  });
+
+  $("#restart_demo").on("submit", function (e) {
+    e.preventDefault();
+    $("#main-container").hide();
+    $("#myModal").hide();
+    document.getElementById('start-container').style.display = "flex";
+  });
+</script>
+
+
+</html>
