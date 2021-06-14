@@ -1,4 +1,5 @@
 # Webex-WebRTC-Guest-Page
+<img src="https://raw.githubusercontent.com/SarahCiscoFrance/Webex-WebRTC-Guest-Page/main/screenshot.png" width="1200">
 
 ## What is it ?
 It is a web application that uses the Webex Browser SDK in order to make or receive 1:1 video calls with another Webex Teams user, with the option to mute your audio and/or video streams. You can also customize the interface to the image of a brand.
