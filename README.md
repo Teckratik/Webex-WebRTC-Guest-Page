@@ -1,4 +1,4 @@
-# Webex-WebRTC-Guest-Page
+# Webex-WebRTC-Guest-Page 🪄
 <img src="https://raw.githubusercontent.com/SarahCiscoFrance/Webex-WebRTC-Guest-Page/main/screenshot.png" width="1200">
 
 ## What is it ?
